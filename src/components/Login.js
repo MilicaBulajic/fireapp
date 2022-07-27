@@ -1,6 +1,6 @@
 import React from "react";
-import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -10,34 +10,26 @@ import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import { useRef } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-export default function Signup() {
-  const { signup } = useAuth();
+export default function SignUp() {
+  const { login } = useAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
-
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do nto match");
-    }
 
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-      navigate("/");
-    } catch (error) {
-      setError("Failed to create an account");
+      await login(emailRef.current.value, passwordRef.current.value);
+    } catch {
+      setError("Failed to log in");
     }
     setLoading(false);
-  };
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -51,7 +43,7 @@ export default function Signup() {
         }}
       >
         {error && <Alert severity="error">{error}</Alert>}
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -75,18 +67,6 @@ export default function Signup() {
                 autoComplete="new-password"
                 inputRef={passwordRef}
               />
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password-confirm"
-                  label="Confirm Password"
-                  type="password"
-                  id="password-confirm"
-                  autoComplete="password"
-                  inputRef={passwordConfirmRef}
-                />
-              </Grid>
             </Grid>
           </Grid>
           <Button
@@ -96,12 +76,11 @@ export default function Signup() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Log in
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              Already have an account?
-              <Link to="/login">Sign in</Link>
+              Need an account? <Link to="/signup">Sign up</Link>
             </Grid>
           </Grid>
         </Box>

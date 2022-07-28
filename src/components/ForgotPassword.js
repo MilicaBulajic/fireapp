@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,27 +8,28 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
+import Typography from "@mui/material/Typography";
 import { useRef } from "react";
 import { useState } from "react";
 
-export default function Login() {
-  const { login } = useAuth();
+export default function ForgotPassword() {
   const emailRef = useRef();
-  const passwordRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [message, setMessage] = useState(false);
+  const { resetPassword } = useAuth();
 
   async function handleSubmit(event) {
     event.preventDefault();
 
     try {
+      setMessage("");
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/dashboard");
+      await resetPassword(emailRef.current.value);
+      setMessage("Check your inbox for instructions");
     } catch {
-      setError("Failed to log in");
+      setError("Failed to reset password");
     }
     setLoading(false);
   }
@@ -45,7 +45,11 @@ export default function Login() {
           alignItems: "center",
         }}
       >
+        <Typography variant="h5" gutterBottom component="div">
+          Reset Password
+        </Typography>
         {error && <Alert severity="error">{error}</Alert>}
+        {message && <Alert severity="success">{message}</Alert>}
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -59,18 +63,6 @@ export default function Login() {
                 inputRef={emailRef}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-                inputRef={passwordRef}
-              />
-            </Grid>
           </Grid>
           <Button
             disabled={loading}
@@ -79,11 +71,11 @@ export default function Login() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Log in
+            Reset Password
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to="/forgot-password">Forgot Password</Link>
+              <Link to="/login">Login</Link>
             </Grid>
           </Grid>
           <Grid container justifyContent="flex-end">

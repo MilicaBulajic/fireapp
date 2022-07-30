@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AddTask from "./tasks/AddTask";
+import TaskList from "./tasks/TaskList";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
@@ -27,7 +28,7 @@ export default function Dashboard() {
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          <AddTask id={taskId} setTaskId={setTaskId} />
+          <TaskList />
         </Typography>
         <Button onClick={handleLogout}>Log out</Button>
       </CardContent>

@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import PrivateRoute from "./PrivateRoute";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

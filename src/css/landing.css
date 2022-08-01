@@ -1,0 +1,46 @@
+ .hexagon {
+     top: 30vh;
+     left: 40%;
+     position: absolute;
+     margin: 0 auto;
+     }
+
+.hexagon,
+.hexagon:before,
+.hexagon:after {
+    background: #B1907F;
+}
+
+.hexagon:before,
+.hexagon:after {
+    content: "";
+    position: absolute;
+    left: 22px;
+    width: 57px;
+    height: 57px;
+    transform: rotate(145deg) skew(22.5deg);
+}
+
+.hexagon:before {
+    top: -29px;
+}
+
+.hexagon:after {
+    top: 27px;
+}
+
+.hexagon span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 55px;
+    background: #B1907F;
+    z-index: 1;
+}
+
+.landing-message {
+    /* max-width: 800px; */
+    width: 60%;
+    color: black
+}
